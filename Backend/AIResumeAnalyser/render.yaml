@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ai-resume-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false          # You will enter this manually in Render dashboard
+      - key: MONGODB_URI
+        sync: false          # Paste your MongoDB Atlas connection string here
+      - key: ALLOWED_ORIGINS
+        sync: false          # Paste your Vercel frontend URL here e.g. https://ai-resume-analyser.vercel.app
+      - key: SERVER_PORT
+        value: 8080

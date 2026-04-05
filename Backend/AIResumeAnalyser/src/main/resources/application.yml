@@ -21,6 +21,11 @@ groq:
   model: llama-3.3-70b-versatile
   max-tokens: 2000
 
+# CORS — comma-separated list of allowed origins
+app:
+  cors:
+    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:4200,http://localhost:3000}
+
 # Actuator
 management:
   endpoints:
