@@ -1,0 +1,126 @@
+<ng-container *ngIf="loading()">
+  <div class="loading-state">
+    <div class="ai-spinner"></div>
+    <p>Loading analysis…</p>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="error()">
+  <mat-card class="card-elevated error-card">
+    <mat-card-content>
+      <mat-icon color="warn">error_outline</mat-icon>
+      <p>{{ error() }}</p>
+      <button mat-raised-button color="primary" (click)="navigateToUpload()">
+        <mat-icon>arrow_back</mat-icon> Back to Upload
+      </button>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+
+<ng-container *ngIf="!loading() && !error() && analysis() as result">
+  <div class="analysis-grid fade-in-up">
+
+    <!-- ── Hero Card ────────────────────────────────────── -->
+    <mat-card class="card-elevated hero-card">
+      <mat-card-content class="hero-content">
+        <div class="hero-left">
+          <div class="score-badge {{ scoreClass }}">{{ result.atsScore }}</div>
+          <div class="score-meta">
+            <span class="score-label">ATS Score</span>
+            <span class="score-grade {{ scoreClass }}">{{ scoreLabel }}</span>
+          </div>
+        </div>
+        <div class="hero-right">
+          <h2 class="filename">{{ result.originalFilename }}</h2>
+          <p class="summary">{{ result.summary }}</p>
+          <span class="date-chip">
+            <mat-icon>schedule</mat-icon>
+            {{ result.createdAt | date:'mediumDate' }}
+          </span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Strengths ─────────────────────────────────────── -->
+    <mat-card class="card-elevated">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="icon-success">check_circle</mat-icon>
+        <mat-card-title>Strengths</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul class="feedback-list success-list">
+          <li *ngFor="let item of result.strengths">
+            <mat-icon>check</mat-icon> {{ item }}
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Weaknesses ────────────────────────────────────── -->
+    <mat-card class="card-elevated">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="icon-warn">warning</mat-icon>
+        <mat-card-title>Weaknesses</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul class="feedback-list warn-list">
+          <li *ngFor="let item of result.weaknesses">
+            <mat-icon>close</mat-icon> {{ item }}
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Suggestions ───────────────────────────────────── -->
+    <mat-card class="card-elevated suggestions-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar color="primary">lightbulb</mat-icon>
+        <mat-card-title>Suggestions for Improvement</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ol class="feedback-list suggestion-list">
+          <li *ngFor="let item of result.suggestions; let i = index">
+            <span class="step-num">{{ i + 1 }}</span> {{ item }}
+          </li>
+        </ol>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Keywords ──────────────────────────────────────── -->
+    <mat-card class="card-elevated">
+      <mat-card-header>
+        <mat-icon mat-card-avatar color="accent">tag</mat-icon>
+        <mat-card-title>Keyword Optimization</mat-card-title>
+        <mat-card-subtitle *ngIf="result.jobDescription">Based on provided job description</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="!result.jobDescription">Key terms identified in your resume</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chip-list">
+          <mat-chip *ngFor="let kw of result.keywords" highlighted>{{ kw }}</mat-chip>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Job Description (if provided) ─────────────────── -->
+    <mat-card class="card-elevated" *ngIf="result.jobDescription">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>work</mat-icon>
+        <mat-card-title>Analysed Against Job Description</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="jd-text">{{ result.jobDescription }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Actions ───────────────────────────────────────── -->
+    <div class="action-row">
+      <button mat-stroked-button (click)="navigateToHistory()">
+        <mat-icon>history</mat-icon> View History
+      </button>
+      <button mat-raised-button color="primary" (click)="navigateToUpload()">
+        <mat-icon>upload_file</mat-icon> Analyse New Resume
+      </button>
+    </div>
+
+  </div>
+</ng-container>

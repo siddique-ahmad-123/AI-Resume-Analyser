@@ -1,0 +1,33 @@
+# ── Secrets ──────────────────────────────────────────────────
+.env
+
+# ── Java / Maven ──────────────────────────────────────────────
+**/target/
+**/mvnw.cmd
+**/.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+
+# ── Node / Angular ────────────────────────────────────────────
+**/node_modules/
+**/dist/
+**/.angular/
+**/out-tsc/
+
+# ── IDE ───────────────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+*.ipr
+**/.classpath
+**/.project
+**/.settings/
+.vscode/extensions.json
+
+# ── OS ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Docker ────────────────────────────────────────────────────
+*.log

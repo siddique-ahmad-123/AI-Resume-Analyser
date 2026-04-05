@@ -1,0 +1,101 @@
+.history-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  h1 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+    mat-icon { color: #3f51b5; }
+  }
+}
+
+.history-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-card {
+  padding: 0;
+
+  mat-card-content { padding: 0; }
+}
+
+.filename-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  mat-icon { flex-shrink: 0; }
+}
+
+/* Score chip */
+.score-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: white;
+
+  &.excellent { background: #4caf50; }
+  &.good      { background: #2196f3; }
+  &.average   { background: #ff9800; }
+  &.poor      { background: #f44336; }
+}
+
+.jd-preview {
+  font-size: 0.85rem;
+  color: #555;
+  cursor: default;
+}
+
+.no-jd { color: #bbb; }
+
+.table-row:hover { background: #f5f5ff; cursor: pointer; }
+
+/* Empty state */
+.empty-card mat-card-content {
+  text-align: center;
+  padding: 60px;
+
+  mat-icon { font-size: 56px; height: 56px; width: 56px; color: #bbb; }
+  h3 { font-size: 1.2rem; margin: 12px 0 8px; }
+  p  { color: #888; margin-bottom: 20px; }
+}
+
+/* Loading */
+.loading-state {
+  text-align: center;
+  padding: 80px;
+
+  .ai-spinner {
+    width: 56px;
+    height: 56px;
+    border: 4px solid #e3e3f3;
+    border-top: 4px solid #3f51b5;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+    margin: 0 auto 16px;
+  }
+
+  p { color: #888; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,95 @@
+/* ============================================================
+   Global Styles — AI Resume Analyser
+   ============================================================ */
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$primary-palette: mat.define-palette(mat.$indigo-palette, 600);
+$accent-palette:  mat.define-palette(mat.$cyan-palette, A200);
+$warn-palette:    mat.define-palette(mat.$red-palette);
+
+$theme: mat.define-light-theme((
+  color: (
+    primary: $primary-palette,
+    accent:  $accent-palette,
+    warn:    $warn-palette
+  ),
+  typography: mat.define-typography-config(
+    $font-family: "'Inter', sans-serif"
+  ),
+  density: 0
+));
+
+@include mat.all-component-themes($theme);
+
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f4f6fb;
+  color: #1a1a2e;
+}
+
+/* ── Utility ──────────────────────────────────────────────── */
+.page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.card-elevated {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3f51b5;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+
+  &.excellent { background: linear-gradient(135deg, #4caf50, #2e7d32); }
+  &.good      { background: linear-gradient(135deg, #2196f3, #1565c0); }
+  &.average   { background: linear-gradient(135deg, #ff9800, #e65100); }
+  &.poor      { background: linear-gradient(135deg, #f44336, #b71c1c); }
+}
+
+/* ── Animations ───────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.35s ease-out;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .page-container { padding: 12px 8px; }
+}

@@ -1,0 +1,86 @@
+<div class="upload-wrapper">
+
+  <!-- ── STEP: SELECT FILE ────────────────────────────────── -->
+  <ng-container *ngIf="step() === 'select'">
+    <mat-card class="card-elevated upload-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar color="primary">description</mat-icon>
+        <mat-card-title>Upload Your Resume</mat-card-title>
+        <mat-card-subtitle>PDF or DOCX · Max 10 MB</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div
+          class="drop-zone"
+          [class.dragging]="isDragging()"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave()"
+          (drop)="onDrop($event)"
+          (click)="fileInput.click()">
+          <mat-icon class="drop-icon">cloud_upload</mat-icon>
+          <p class="drop-title">Drag & drop your resume here</p>
+          <p class="drop-sub">or click to browse</p>
+          <input #fileInput type="file" accept=".pdf,.docx" hidden (change)="onFileSelected($event)" />
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <!-- ── STEP: UPLOADED — ADD JD ──────────────────────────── -->
+  <ng-container *ngIf="step() === 'uploaded'">
+    <mat-card class="card-elevated upload-card fade-in-up">
+      <mat-card-header>
+        <mat-icon mat-card-avatar style="color: #4caf50">check_circle</mat-icon>
+        <mat-card-title>Resume Uploaded</mat-card-title>
+        <mat-card-subtitle>{{ uploadedResume()?.originalFilename }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="file-info">
+          <mat-icon color="primary">insert_drive_file</mat-icon>
+          <div>
+            <strong>{{ uploadedResume()?.originalFilename }}</strong>
+            <span class="meta">{{ uploadedResume()?.fileType }} · {{ uploadedResume()?.extractedCharCount | number }} chars extracted</span>
+          </div>
+        </div>
+
+        <form [formGroup]="form">
+          <mat-form-field appearance="outline" class="full-width jd-field">
+            <mat-label>Job Description (optional)</mat-label>
+            <textarea
+              matInput
+              formControlName="jobDescription"
+              placeholder="Paste the job description here to get keyword-optimised feedback..."
+              rows="6"
+              maxlength="10000">
+            </textarea>
+            <mat-hint align="end">{{ form.get('jobDescription')?.value?.length || 0 }}/10000</mat-hint>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-button (click)="reset()">
+          <mat-icon>refresh</mat-icon> Upload Different
+        </button>
+        <button mat-raised-button color="primary" (click)="analyseResume()">
+          <mat-icon>auto_awesome</mat-icon> Analyse Resume
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+
+  <!-- ── STEP: ANALYSING ───────────────────────────────────── -->
+  <ng-container *ngIf="step() === 'analysing'">
+    <mat-card class="card-elevated upload-card">
+      <mat-card-content class="analysing-state">
+        <div class="spinner-container">
+          <div class="ai-spinner"></div>
+        </div>
+        <h2>AI is analysing your resume…</h2>
+        <p>This usually takes 10–20 seconds</p>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+</div>

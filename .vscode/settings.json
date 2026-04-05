@@ -1,0 +1,37 @@
+{
+  // ── Java / Maven ────────────────────────────────────────────
+  // Tell the Java Language Server to use Maven and auto-update classpath
+  "java.import.maven.enabled": true,
+  "java.configuration.updateBuildConfiguration": "automatic",
+
+  // Explicitly mark src/main/java as the source root so VS Code
+  // doesn't confuse "main.java.com.airesume" with "com.airesume"
+  "java.project.sourcePaths": [
+    "Backend/AIResumeAnalyser/src/main/java",
+    "Backend/AIResumeAnalyser/src/main/resources"
+  ],
+
+  // Suppress null-analysis noise while developing
+  "java.compile.nullAnalysis.mode": "disabled",
+
+  // Don't scan node_modules or build output for Java files
+  "java.import.exclusions": [
+    "**/node_modules/**",
+    "**/Frontend/**",
+    "**/.git/**",
+    "**/.DS_Store"
+  ],
+
+  // ── Angular / TypeScript ────────────────────────────────────
+  "typescript.tsdk": "Frontend/ai-resume-analyser/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // ── Editor ──────────────────────────────────────────────────
+  "editor.formatOnSave": true,
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

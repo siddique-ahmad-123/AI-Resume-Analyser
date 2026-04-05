@@ -1,0 +1,54 @@
+services:
+
+  # ── MongoDB ────────────────────────────────────────────────
+  mongo:
+    image: mongo:7-jammy
+    container_name: ai_resume_db
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Backend ─────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./Backend/AIResumeAnalyser
+      dockerfile: Dockerfile
+    container_name: ai_resume_backend
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MONGODB_URI:    mongodb://mongo:27017/ai_resume_db
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      SERVER_PORT:    8080
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # ── Frontend ─────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./Frontend/ai-resume-analyser
+      dockerfile: Dockerfile
+    container_name: ai_resume_frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "4200:80"
+
+volumes:
+  mongo_data:
