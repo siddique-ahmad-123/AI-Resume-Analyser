@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ai-resume-backend
+    runtime: docker
+    dockerfilePath: ./Backend/AIResumeAnalyser/Dockerfile
+    dockerContext: ./Backend/AIResumeAnalyser
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: SERVER_PORT
+        value: 8080
